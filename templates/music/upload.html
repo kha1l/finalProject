@@ -1,0 +1,33 @@
+{% extends "main.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+</head>
+    <body>
+    {% block content %}
+        <form class="upload" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <table>
+                {{ form.as_p }}
+            </table>
+            <p>
+                <input class="button_new" type="submit" value="Upload">
+            </p>
+
+        {% if songs %}
+        <table class="left_table">
+            <tr>
+                <td>
+                    Upload success
+                    <img src="{% static 'icon_yes.png' %}" alt="yes">
+                </td>
+            </tr>
+        </table>
+        {% endif %}
+        </form>
+    {% endblock %}
+</body>
+</html>

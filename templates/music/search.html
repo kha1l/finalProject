@@ -1,0 +1,77 @@
+{% extends "main.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+{% block content %}
+ <form action="{% url 'search' %}" method="post">
+    {% csrf_token %}
+     <label>
+         <input id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+     </label>
+ </form>
+     <table id="myTable">
+        {% for song in songs %}
+        <tr class="header">
+            <td>
+                <audio controls preload="auto">
+                    <source src="{{ song.file.url }}" type="audio/mp3">
+                </audio>
+            </td>
+            <td>
+                <h4>{{ song.author }}</h4>
+            </td>
+            <td>
+                <h4>{{ song.title }}</h4>
+            </td>
+            <td>
+                <form class="add" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="song_id" value="{{ song.id }}">
+                    <input class='button_new' type="submit" value="Add">
+                </form>
+            </td>
+            <td>
+                <button class="button_new" onclick="myDownload('{{ song.file.url }}')">Download</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+function myFunction() {
+    let input, filter, table, tr, td, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+  }
+}
+</script>
+<script>
+        function myDownload(path) {
+            let link = document.createElement('a');
+            link.setAttribute('href', path);
+            link.setAttribute('download', "{{ song.name }}");
+            link.setAttribute('target', '_blank');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+</script>
+{% endblock %}
+</body>
+</html>

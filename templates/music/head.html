@@ -1,0 +1,34 @@
+{% extends "main.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MusicStorage</title>
+</head>
+<body>
+{% block content %}
+    <div class="col-container">
+        <div class="col">
+            <h2>Music</h2>
+            <p><a href="{% url 'music' %}" class="button">Your music(save, search, listen)</a></p>
+        </div>
+        <div class="col">
+            <h2>Upload</h2>
+            <p><a href="{% url 'upload' %}" class="button">Upload song in storage</a></p>
+        </div>
+        <div class="col">
+            <h2>Search</h2>
+            <p><a href="{% url 'search' %}" class="button">Search a track in the global storage</a></p>
+        </div>
+        <div class="col">
+            <h2>API</h2>
+            <p><a href="api/" class="button">Use API for change data</a></p>
+        </div>
+    </div>
+{% endblock %}
+<div class="tags">
+    Educational Project
+</div>
+</body>
+</html>

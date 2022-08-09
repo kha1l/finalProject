@@ -1,0 +1,53 @@
+{% extends "main.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <title>Music</title>
+</head>
+<body>
+{% block content %}
+    <table id="myTable">
+        {% for song in songs %}
+        <tr class="header">
+            <td>
+                <audio controls preload="auto">
+                    <source src="{{ song.file.url }}" type="audio/mp3">
+                </audio>
+            </td>
+            <td>
+                {{ song.author }}
+            </td>
+            <td>
+                {{ song.title }}
+            </td>
+            <td>
+                <form class="del" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="song_id" value="{{ song.id }}">
+                    <input class='button_new' type="submit" value="Delete">
+                </form>
+            </td>
+            <td>
+                <button class="button_new" onclick="myDownload('{{ song.file.url }}')">Download</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <script>
+        function myDownload(path) {
+            let link = document.createElement('a');
+            link.setAttribute('href', path);
+            link.setAttribute('download', "{{ song.name }}");
+            link.setAttribute('target', '_blank');
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+{% endblock %}
+</body>
+</html>
