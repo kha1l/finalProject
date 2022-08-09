@@ -16,7 +16,8 @@
         {% if request.user.is_authenticated %}
             <a class='log' href="{% url 'logout' %}">LogOut</a>
         {% else %}
-            <a class='log' href="{% url 'logon' %}">LogOn</a>
+            <a class='log' href="{% url 'logon' %}">LogIn</a>
+            <a class='log' href="{% url 'register' %}">LogOn</a>
         {% endif %}
     </div>
     <div class="all_content">
